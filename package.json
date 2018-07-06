@@ -1,0 +1,26 @@
+{
+  "name": "svnlog",
+  "version": "1.0.0",
+  "description": "抽取SVN日志信息进行统计",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrunlee/svnlog.git"
+  },
+  "keywords": [
+    "svn",
+    "svnlog"
+  ],
+  "author": "chrunlee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrunlee/svnlog/issues"
+  },
+  "homepage": "https://github.com/chrunlee/svnlog#readme",
+  "dependencies": {
+    "iconv-lite": "^0.4.23"
+  }
+}
