@@ -1,8 +1,8 @@
 {
   "name": "svnlog",
   "version": "1.0.0",
-  "description": "抽取SVN日志信息进行统计",
-  "main": "app.js",
+  "description": "windows下调用本地svn命令行工具，查询并解析SVN仓库的日志信息",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
