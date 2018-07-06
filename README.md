@@ -39,5 +39,5 @@ client.info().then(function(svn){
 
 ```
 
-#license 
+# license 
 MIT LICENSE
