@@ -7,7 +7,7 @@
  * 4. 记录每次修改的时间，并根据时间进行统计
  * 5. 数据库: id , repo , author , mode(AMD) , path , operatetime,version,
  ***/
-const {exec} = require('child_process');
+const {spawn} = require('child_process');
 const iconv = require('iconv-lite');
 
 /***
@@ -17,7 +17,7 @@ class SVNLOG {
 
 	constructor( path ){
 		this.path = path;//
-		this.cmd= [`svn info ${this.path}`,`svn log ${path} -v`];
+		this.cmd= [['info',this.path],['log',path,'-v']];
 	}
 	//获得svn信息
 	async info (){
@@ -44,7 +44,7 @@ class SVNLOG {
 			arr.forEach( line => {//对每一行进行分解
 				line = line.trim();
 				if(line != ''){//空行跳过
-					if(line.match(/^r[\.]*/)){
+					if(line.match(/^r[\d]{1,}[\.]*/)){
 						let infoArr = line.split('|');
 						version = infoArr[0].trim();
 						author =infoArr[1].trim();
@@ -92,15 +92,21 @@ class SVNLOG {
 	async exec( cmd ){
 		const encoding = 'cp936';
 		const binaryEncoding = 'binary';
-		return await new Promise((resolve,reject) => {
-			exec(cmd,{ encoding: binaryEncoding },function(err,stdout,stderr){
-				if(err){
-					reject(err);
-				}else{
-					const str = iconv.decode(Buffer.from(stdout,binaryEncoding),encoding);
-					resolve(str);
-				}
-			})
+		return await new Promise((resolve,reject)=>{
+			var data = [];
+			const ls = spawn('svn', cmd);
+			ls.stdout.on('data', (line) => {
+				line = iconv.decode(Buffer.from(line,binaryEncoding),encoding)
+			  	data.push(line)
+			});
+
+			ls.stderr.on('data', (data) => {
+			  reject();
+			});
+			ls.on('close', (code) => {
+				resolve(data.join(''));
+			});
+
 		});
 	}
 }

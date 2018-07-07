@@ -1,6 +1,6 @@
 {
   "name": "svnlog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "windows下调用本地svn命令行工具，查询并解析SVN仓库的日志信息",
   "main": "index.js",
   "scripts": {
